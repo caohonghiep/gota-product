@@ -22,7 +22,7 @@ let interval = setInterval(async ()=> {
 
         //console.log(JSON.stringify(users));
 
-        /*
+/*
         categoryDAO.createMany([
             new Category(
                 {
@@ -47,8 +47,18 @@ let interval = setInterval(async ()=> {
             )
 
         ]);
-        */
+*/
+try{
+    categoryDAO.create(new Category({
 
+        "_id": "do-tre-em",
+        "name": "Đồ Trẻ Em"
+    }))
+}catch (err){
+
+}
+
+/*
         let products =
         [{
             "_id":"crochet-croptop-yobk04",
@@ -216,7 +226,7 @@ let interval = setInterval(async ()=> {
         products.forEach(p=>{
             productDAO.create(new Product(p));
         })
-
+*/
 
     }
 },500);

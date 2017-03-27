@@ -4,7 +4,7 @@
 //https://github.com/Microsoft/TypeScript/issues/204
 
 import {Connection} from "./Connection";
-import {Collection, ObjectID} from "mongodb";
+import {Collection} from "mongodb";
 import {Model, Product, Category} from "./model";
 import {isUndefined} from "util";
 
@@ -18,6 +18,8 @@ export class DAO<T extends Model> {
         return Connection.getDataBase().collection(this.collectionName);
     }
 
+
+
     private cleanNullValue(t: Object):void{
         Object.keys(t).forEach(key=>{
             if(t[key]===null ||  t[key]=== undefined){
@@ -26,7 +28,7 @@ export class DAO<T extends Model> {
         });
     }
 
-    async create(t: T): Promise<boolean>{
+    async create(t: T): Promise<string>{
         let collection = this.collection;
         console.log('Creating "%s": %s', collection.collectionName, JSON.stringify(t));
         this.cleanNullValue(t);
@@ -38,7 +40,7 @@ export class DAO<T extends Model> {
             throw err;
         }
         //console.log('Creating is Success: %s', JSON.stringify(result.result));
-        return result.result.ok ===1;
+        return result.insertedId ;
     };
 
     async read(id: string): Promise<T>{
@@ -46,7 +48,7 @@ export class DAO<T extends Model> {
         console.log('Reading "%s" id: %s', collection.collectionName, id);
         let t: T;
         try{
-            t = await collection.findOne({'_id':new ObjectID(id)});
+            t = await collection.findOne({'_id':/*new ObjectID(*/id/*)*/});
         }catch (err){
             console.log('Reading is Fail: %s', JSON.stringify(err));
             throw err;
@@ -61,7 +63,7 @@ export class DAO<T extends Model> {
         this.cleanNullValue(updatingProperties);
         let result;
         try{
-            result = await collection.updateOne({'_id':new ObjectID(id)}, {$set: updatingProperties}, {w:1});
+            result = await collection.updateOne({'_id':/*new ObjectID(*/id/*)*/}, {$set: updatingProperties}, {w:1});
         }catch (err){
             console.log('Updating is Fail: %s', JSON.stringify(err));
             throw err;
@@ -74,7 +76,7 @@ export class DAO<T extends Model> {
         console.log('Deleting "%s" id: %s', collection.collectionName, id);
         let result;
         try{
-            result = await collection.deleteOne({'_id':new ObjectID(id)},{w:1});
+            result = await collection.deleteOne({'_id':/*new ObjectID(*/id/*)*/},{w:1});
         }catch (err){
             console.log('Deleting is Fail: %s', JSON.stringify(err));
             throw err;
@@ -82,7 +84,7 @@ export class DAO<T extends Model> {
         return  result.result && result.result.ok===1;
     }
 
-    async createMany(array: Array<T>): Promise<{ ok: number, n: number }>{
+    async createMany(array: Array<T>): Promise<Array<string>>{
         let collection = this.collection;
         console.log('Creating Many "%s"', collection.collectionName);
         array.forEach(t=>{
@@ -95,7 +97,7 @@ export class DAO<T extends Model> {
             console.log('Creating Many is Fail: %s', JSON.stringify(err));
             throw err;
         }
-        return result.result;
+        return result.insertedIds;
     };
 
     async search(query?: Object): Promise<Array<T>>{

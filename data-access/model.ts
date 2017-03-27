@@ -1,6 +1,11 @@
 
-export interface Model {
+export class Model {
     _id?: string;
+    constructor(object: Object){
+        Object.keys(object).forEach(key=>{
+           this[key] = object[key];
+        });
+    }
 }
 
 export class Product implements Model{
@@ -29,13 +34,13 @@ export class Category implements Model{
     name: string;
     description: string;
     images: Array<string>;
-    children:Array<Category>;
+    childrenIds:Array<string>;
     constructor(object: Object){
         this._id = object['_id'];
         this.name = object['name'];
         this.description =  object['description'];
         this.images = object['images'];
-        this.children = object['childs'];
+        this.childrenIds = object['childrenIds'];
     }
 }
 

@@ -17,8 +17,21 @@ app.get('/', function (req, res) {
 let productService = new ProductService();
 
 app.get('/categories', function (req,res) {
-    productService.findAllCategories(req,res);
+    productService.searchCategories(req,res);
 });
+
+app.post('/categories', function (req,res) {
+    productService.createCategory(req,res);
+});
+
+app.get('/categories/:categoryId', function (req,res) {
+    productService.readCategory(req,res);
+});
+
+app.post('/categories/:categoryId', function (req,res) {
+    productService.createCategory(req,res);
+});
+
 /*
 app.get('/categories/categoryId', function (req,res) {
     productionService.findAllCategories(req,res);
