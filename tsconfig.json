@@ -1,8 +1,10 @@
 {
+    "compileOnSave": true,
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
         "sourceMap": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "lib":["es2016", "dom"]
     }
 }
