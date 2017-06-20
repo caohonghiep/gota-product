@@ -1,24 +1,24 @@
-/// <reference path="model.ts" />
+/// <reference path="../models/model.ts" />
 
 //https://blogs.msdn.microsoft.com/typescript/2015/11/03/what-about-asyncawait/
 //https://github.com/Microsoft/TypeScript/issues/204
 
 import {Connection} from "./Connection";
 import {Collection} from "mongodb";
-import {Model, Product, Category} from "./model";
+import {Model} from "../models/model";
 import {isUndefined} from "util";
 
+let createCollection = async function(dao, collectionName){
+    dao.collection = await Connection.createCollection(collectionName);
+}
 export class DAO<T extends Model> {
-    private collectionName: string;
+    private collection: Collection;
     constructor(clazz: Function){
-        this.collectionName = clazz.name;
-        // this.collection = Connection.getDataBase().collection(clazz.name);
+        createCollection(this, clazz.name);
     }
-    get collection():Collection{
-        return Connection.getDataBase().collection(this.collectionName);
-    }
-
-
+    // get collection():Collection{
+    //     return Connection.getDataBase().collection(this.collectionName);
+    // }
 
     private cleanNullValue(t: Object):void{
         Object.keys(t).forEach(key=>{
@@ -140,16 +140,4 @@ export class DAO<T extends Model> {
         return  result.result;
     }
 
-}
-
-export class ProductDAO extends DAO<Product>{
-    constructor(){
-        super(Product);
-    }
-}
-
-export class CategoryDAO extends DAO<Category> {
-    constructor() {
-        super(Category);
-    }
 }

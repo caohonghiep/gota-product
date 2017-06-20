@@ -1,5 +1,5 @@
 import {ProductDomain} from "../domains/ProductDomain";
-export class ProductService{
+export default class UserService{
     private productDomain:ProductDomain;
     constructor(){
         this.productDomain = new ProductDomain();

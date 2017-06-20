@@ -1,5 +1,7 @@
-import {ProductDAO, CategoryDAO} from "../data-access/DAO";
-import {Model, Product, Category} from "../data-access/model";
+
+import {ProductDAO} from "../data-access/ProductDAO";
+import {CategoryDAO} from "../data-access/CategoryDAO";
+import {Category} from "../models/Category";
 /**
  * Created by AAAA on 3/24/2017.
  */
@@ -7,10 +9,10 @@ import {Model, Product, Category} from "../data-access/model";
 function changeAlias( alias ) {
     var str = alias.trim();
     str = str.toLowerCase();
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ  |ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ  |ợ|ở|ỡ/g, "o");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
     str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
     str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
     str = str.replace(/đ/g, "d");
@@ -51,7 +53,7 @@ export class ProductDomain{
                 err = err;
                 category._id = category._id + Math.floor((Math.random() * 10) + 1);
             }
-        }while (error && error.code === 11000Math.floor((Math.random() * 10) + 1); )
+        }while (error && error.code === 11000)
 
         if(parentCategoryId){
             let parentCategory:Category;
