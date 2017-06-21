@@ -5,6 +5,7 @@
         "target": "es6",
         "sourceMap": true,
         "outDir": "./dist",
-        "lib":["es2016", "dom"]
+        "lib":["es2016", "dom"],
+        "experimentalDecorators": true
     }
 }
