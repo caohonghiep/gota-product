@@ -50,7 +50,7 @@ export class ProductDomain{
             try {
                 categoryId =  await this.categoryDAO.create(category);
             }catch (err){
-                err = err;
+                error = err;
                 category._id = category._id + Math.floor((Math.random() * 10) + 1);
             }
         }while (error && error.code === 11000)
@@ -67,9 +67,9 @@ export class ProductDomain{
                 if(Array.isArray(childrenIds)){
                     childrenIds.push(categoryId);
                 }else{
-                    parentCategory.childrenIds = [categoryId];
+                    childrenIds = [categoryId];
                 }
-
+                await this.categoryDAO.update(parentCategoryId,{childrenIds:childrenIds})
             }
         }
 
